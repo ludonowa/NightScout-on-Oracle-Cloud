@@ -268,10 +268,10 @@ We have a server with CentOS 8, RedHat8 or Oracle lunux 8
 Nous avons un serveur installé exécutant CentOS 8, accès via ssh. SELinux configuration will explain later. We will need to be connected as root. The server should have a Staic/ fixe IP adddress. A public DNS entry should be exist for the Fixe IP address and will be explain later. During the installation, I will use "night.freeddns.org".
 
 Start to be root
-sudo –s
+#sudo –s
  
-dnf install git nano mc -y
-dnf groupinstall 'Development Tools' -y
+#dnf install git nano mc -y
+#dnf groupinstall 'Development Tools' -y
 
 NodeJS Installation
 The installation will be done from the AppStream repository, let check the existing version
