@@ -6,12 +6,16 @@ Create the Linux Oracle Cloud VM
 Oracle Cloud account creation
 
 Connect to a https://cloud.oracle.com
+![image](https://user-images.githubusercontent.com/96974624/197184979-70a2cc47-9ad0-44d1-a18d-90699ef658f6.png)
  
 Click on Sign Up
+![image](https://user-images.githubusercontent.com/96974624/197185008-713136af-4a80-4c69-82b7-6ebc8f0fe4f4.png)
  
 Enter the information and check “i m an human” and then click on verify my email
 In the email received from Oracle Cloud noreply@verify.signup.us-ashburn-1.oci.oraclecloud.com click on “verify email”
+![image](https://user-images.githubusercontent.com/96974624/197185049-8980f6ad-1027-4e9f-abbd-76a4a080aa60.png)
  
+![image](https://user-images.githubusercontent.com/96974624/197185143-1039db12-9377-49b8-98be-a3016f1da3e7.png)
 
  
 Finish completing the form with all the other information
@@ -35,7 +39,7 @@ Click on “Continue”
 
 
 
-Then enter your Baking card information. it’s mandatory but if you follow this tutorial the VM will be free of charge
+Then enter your Banking card information. it’s mandatory but if you follow this tutorial the VM will be free of charge
 
  
 
