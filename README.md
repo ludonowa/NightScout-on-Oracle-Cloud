@@ -21,89 +21,81 @@ Finish completing the form with all the other information
 -	password
 -	Choose individual
 -	keep the “Cloud account name” it will be needed to logon 
+![image](https://user-images.githubusercontent.com/96974624/197185618-b163c063-9f3f-4e31-9c32-e9ab2b0a2ed9.png)
  
-
 Click on “Continue”
 -	enter your address
 -	your phone number
+![image](https://user-images.githubusercontent.com/96974624/197185666-10b56f32-41dd-48bf-9374-86c62513261a.png)
  
-
-
-
-
-
-
-
-
-
-
-
 Then enter your Banking card information. it’s mandatory but if you follow this tutorial the VM will be free of charge
-
- 
+![image](https://user-images.githubusercontent.com/96974624/197185732-a2b2ff1c-b148-4ba5-b520-b444894c56ed.png)
 
 Check the checkbox and click on start your free period
 Virtual Machine creation
 
 From the Dashboard search « Launch Resource » and then click on « Create a VM instance »
- 
+![image](https://user-images.githubusercontent.com/96974624/197185829-add26c65-c963-4c81-adab-5b6c56c0a0d6.png)
 
 Edit « Image and Shape »
 Keep Oracle linux 8 en OS
+![image](https://user-images.githubusercontent.com/96974624/197185885-477117d8-9421-4f8d-93be-4bd06e59643a.png)
  
 Click on change shape
 Select Ampere Arm-based processor
- 
-
-
-
-
-
+![image](https://user-images.githubusercontent.com/96974624/197185915-ee25c86b-f31e-4fcb-b62a-faaf6d101fa7.png)
 
 with this type of processor you can choose 4 OCPU and 24 GB of Memory
+![image](https://user-images.githubusercontent.com/96974624/197185962-766e44c8-6adf-4b01-8a9e-f3c3cc3003a3.png)
  
 Verify that “Assign a public IPV4 address” is YES
-
+![image](https://user-images.githubusercontent.com/96974624/197185992-fb855cf0-0265-4e63-9d2a-7c8d6a7adc8d.png)
  
-Sur Oracle Cloud la seul manière de se connecter sur la machine virtuel est avec une paire de clef
+On Oracle Cloud the only way to connect to the VM is used sshkey pairs
+![image](https://user-images.githubusercontent.com/96974624/197186156-be07fa40-5f01-457c-a444-0143724e022f.png)
  
 Save the private and the public keys on your computer
+![image](https://user-images.githubusercontent.com/96974624/197186190-9b65ffd2-0291-45e1-b106-f7db0dd10c0d.png)
  
 Then Click to Create
 After some minutes the virtuel machine will be up and running
-
-
- 
+![image](https://user-images.githubusercontent.com/96974624/197186224-777d00d0-6613-4f49-9a9b-3227c7bc20a7.png)
 
 Get the public IP address
 
 Oracle Cloud VCN configuration (firewall)
 
 Click on burger at the top left
+![image](https://user-images.githubusercontent.com/96974624/197186280-8f941435-792e-4517-9dab-16aabb3a5b7d.png)
  
 Click on “Network » on he left pane and then on “Virtual Cloud Networks” (VCN)
 Click on the VCN available 
+![image](https://user-images.githubusercontent.com/96974624/197186313-2d5f7c12-ed29-4b36-8825-99da1992caca.png)
+
 Click on public subnet
- 
+![image](https://user-images.githubusercontent.com/96974624/197186345-5e881987-6435-4073-b9c2-572ec8a6bd5c.png) 
+
 Click on security list
- 
+![image](https://user-images.githubusercontent.com/96974624/197186399-20ff2d38-a566-47ad-98ad-87e817879dc5.png)
 
 Click on add ingress rules
+![image](https://user-images.githubusercontent.com/96974624/197186500-38be01cd-1837-4f47-bd48-d61bc40f1cb8.png)
  
 We will add the http access TCP Port 80
 Complete the form like the example bellow
+![image](https://user-images.githubusercontent.com/96974624/197186569-3c309404-b4db-4c0f-949e-83678caf04a9.png)
  
 Click on Save Change
 We will add https access TCP Port 443
 Click on add ingress rules
 Complete the form like the example bellow
-
-
- 
+![image](https://user-images.githubusercontent.com/96974624/197186600-8688235e-d0de-4d2a-83c4-34ebb1bab39e.png)
 
 Your Oracle Cloud environment will permit http and https acsess
 
 MongoDB Atlas Database Creation
+![image](https://user-images.githubusercontent.com/96974624/197186642-81d55e61-9965-4bcb-af33-670b47800de1.png)
+
 Database limitations
 We will use a cluster M0 free of charge for the nightscout Atlas MongoDB database, the size is limited to 512MB
 You will maybe need to do some cleaning, be sure that dbsize has been added in enable parameter to have a look on the space used. you can increase the size with a shared cluster M2, the prize is 9$/month
@@ -111,66 +103,38 @@ MongoDB Atlas account creation
 In your Browser open a new tab and enter the url bellow
 https://www.mongodb.com/cloud/atlas/register
 Enter your information in the form and click to  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![image](https://user-images.githubusercontent.com/96974624/197186687-73578a71-e9a3-4a12-83cf-1a3022eabab6.png)
+![image](https://user-images.githubusercontent.com/96974624/197186752-2a03c851-e981-45cb-b2f3-398268003225.png)
 
 You will receive an email from MongoDB Atlas to check your email address, check your Spam folder
- 
+![image](https://user-images.githubusercontent.com/96974624/197186787-c127ebea-15b6-4872-b90a-737eaf6bb301.png)
 
 In the email received from MongoDB Cloud mongodb-account@mongodb.com click on  
- 
-
+![image](https://user-images.githubusercontent.com/96974624/197186821-74275431-9f1d-4494-bebb-12f8220acea4.png)
+![image](https://user-images.githubusercontent.com/96974624/197186857-38cf5a77-2362-4e58-b163-3c9804e13218.png)
 
 A new tab will be open asking you to confirm your email address. Click on  
- 
- 
+![image](https://user-images.githubusercontent.com/96974624/197186884-5617a2fe-d7c5-4f38-b9d7-36d7df2d8c96.png)
+![image](https://user-images.githubusercontent.com/96974624/197186907-07cbccf5-6e8e-46e5-a437-6cbf2f703083.png)
 
 Complete the form with the information like the example bellow and click on “Finish”.
- 
-
+![image](https://user-images.githubusercontent.com/96974624/197186946-16479488-d277-47c0-b4d0-fbe20cc19eae.png)
  
 Database Creation
 
 Click on “Build a database”
+![image](https://user-images.githubusercontent.com/96974624/197186984-e3ac0b56-5ffa-4b3c-9133-40a9c592d053.png)
  
 Select “Create a cluster in Shared Clusters (FREE)”
-
- 
+![image](https://user-images.githubusercontent.com/96974624/197187024-3396294d-37c5-4cd7-82a7-9f65cf05c9d6.png)
 
 If banking information are request, stop the procedure
 
 We will create a free of charge cluster: no banking information needed.
- 
+![image](https://user-images.githubusercontent.com/96974624/197187089-edbcd369-7dcd-4e1b-9654-c3cf56ecbaf2.png)
 
 Check that you have selected Shared, keep the default access and click on Create Cluster
- 
-
+![image](https://user-images.githubusercontent.com/96974624/197187130-1aea3f9e-7f26-4128-8dbe-06088fd0f621.png)
 
 Select Username and Password and invent a database username (for example nightscout) and a database password (keep the password safe from other).
 
@@ -178,30 +142,32 @@ Database Password recommendation:
 - do not use the same as your Atlas account.
 - do not use special character and space. 
 - use only letters and numbers.
+![image](https://user-images.githubusercontent.com/96974624/197187178-13383365-32ee-448f-8369-1ffeced8c98f.png)
  
 Click on « Create User »
 Select « My Local Environment » put in the field « My IP address »  0.0.0.0/0 (i twill permit to all IP address to access to your database if the server use for nightscout got a fixe IP address you can enter the IP of the server. This is the case of the oracle cloud VM created before, then you can put the IP of the Oracle VM
-
- 
+![image](https://user-images.githubusercontent.com/96974624/197187249-a1c30bd1-1a0e-4eb7-b216-a8a4063b5855.png)
 
 Then click “Add Entry »
 
 Click on “Finish and Close”
- 
+![image](https://user-images.githubusercontent.com/96974624/197187342-9dc1b2fc-cbf0-4d8f-b60a-f41c0d256380.png)
 
 Click on “Go to Databases”
- 
+![image](https://user-images.githubusercontent.com/96974624/197187401-ac3056b4-daab-420c-acd3-d4fa10ef3240.png)
 
 Atlas will create your default cluster, it can take more than 3 minutes
- 
+![image](https://user-images.githubusercontent.com/96974624/197187450-1d2a5235-ed70-4233-b6ea-fe07878d5d0e.png)
 
 Click on “Connect”
- 
+![image](https://user-images.githubusercontent.com/96974624/197187493-bdbfe7f9-0e6d-43c6-8352-7ab57c1ce97e.png)
 
 Select “Connect your Application”
+![image](https://user-images.githubusercontent.com/96974624/197187518-0d1243a5-bdac-4fda-9d12-fc3206e6442f.png)
  
 Keep Node.js driver and version
 Click on Copy and keep the Database connection string 
+![image](https://user-images.githubusercontent.com/96974624/197187591-07bfb868-2854-4c03-a355-3e86e4a58039.png)
  
 
 
@@ -247,6 +213,7 @@ Putty is a free ssh tool available here Download PuTTY: latest release (0.77) (g
 Convert the private Key
 
 Launch puttyGen
+![image](https://user-images.githubusercontent.com/96974624/197187707-5487c412-223c-4cf4-83ee-29b98b865559.png)
  
 Open the provate key save during the Oracle Cloud VM creation
 when the Private Key is imported you can click on save Private Key with a .ppk extension
@@ -254,33 +221,42 @@ when the Private Key is imported you can click on save Private Key with a .ppk e
 Putty configuration
  
 Launch putty
+![image](https://user-images.githubusercontent.com/96974624/197187750-f6e67a50-ac7a-404b-9dbe-8e0caf8f318a.png)
  
 In the field Hostname, enter the public IP of the Oracle Cloud VM
-
+![image](https://user-images.githubusercontent.com/96974624/197187806-f5d22cec-272d-46c7-a779-096b1859e87e.png)
   
 Click on Browse et select the key saved previously
+![image](https://user-images.githubusercontent.com/96974624/197187871-46c24420-ba8c-45ce-a224-9debf33211a8.png)
  
 In “Auto-login username” add opc
+![image](https://user-images.githubusercontent.com/96974624/197187903-a3704366-d515-4b21-b870-2356a02b8d01.png)
  
 Give a name to your session and click on Save Button
 
 Now you can click to open
+![image](https://user-images.githubusercontent.com/96974624/197187950-51f2e6d9-6d5e-4ee7-9c58-b20bcbaa4e3b.png)
  
 accept the Finger print server
+![image](https://user-images.githubusercontent.com/96974624/197187975-c04bbcc6-c00b-4b0e-888f-57a4e17f90d3.png)
  
 You are now connected to your VM
  
 Create a public DNS Entry
 To create a free public DNS entry you can use Free dynamic DNS service | Dynu Systems, Inc.
+![image](https://user-images.githubusercontent.com/96974624/197188051-fba3b759-2a78-453e-8a28-26c49c46fc42.png)
  
 Click on “Sign Up”
+![image](https://user-images.githubusercontent.com/96974624/197188081-fdda8871-8591-4286-9994-c52b29e8d52c.png)
  
 In option 1 add your hostname and select a domain
 Click Add
 Complete the form with your information
+![image](https://user-images.githubusercontent.com/96974624/197188106-adb27bba-de27-460b-8dee-71b426ccace4.png)
  
 Click on Submit and validate your email address
 Complete the DNS entry with the public IP of oracle Cloud VM
+![image](https://user-images.githubusercontent.com/96974624/197188133-ebfc32ff-375f-42cc-a7f2-8da7f7c2093a.png)
  
 Click to save
 
