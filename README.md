@@ -279,7 +279,7 @@ The installation will be done from the AppStream repository, let check the exist
  
     dnf module list nodejs
  
-Cela devrait ressembler à ceci :
+It should looks like:
  
     Oracle Linux 8 Application Stream (aarch64)
     Name      Stream    Profiles                                Summary
