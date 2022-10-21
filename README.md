@@ -1,9 +1,9 @@
 # NightScout-on-Oracle-Cloud
 create a free oracle linux vm For NightScout instance
 
-Create the Linux Oracle Cloud VM
+# Create the Linux Oracle Cloud VM
 
-Oracle Cloud account creation
+# Oracle Cloud account creation
 
 Connect to a https://cloud.oracle.com
 ![image](https://user-images.githubusercontent.com/96974624/197184979-70a2cc47-9ad0-44d1-a18d-90699ef658f6.png)
@@ -71,7 +71,7 @@ Click on burger at the top left
 Click on “Network » on he left pane and then on “Virtual Cloud Networks” (VCN)
 Click on the VCN available 
 ![image](https://user-images.githubusercontent.com/96974624/197186313-2d5f7c12-ed29-4b36-8825-99da1992caca.png)
-
+#
 Click on public subnet
 ![image](https://user-images.githubusercontent.com/96974624/197186345-5e881987-6435-4073-b9c2-572ec8a6bd5c.png) 
 
@@ -93,13 +93,14 @@ Complete the form like the example bellow
 
 Your Oracle Cloud environment will permit http and https acsess
 
-MongoDB Atlas Database Creation
+# MongoDB Atlas Database Creation
 ![image](https://user-images.githubusercontent.com/96974624/197186642-81d55e61-9965-4bcb-af33-670b47800de1.png)
 
-Database limitations
+#  Database limitations
 We will use a cluster M0 free of charge for the nightscout Atlas MongoDB database, the size is limited to 512MB
 You will maybe need to do some cleaning, be sure that dbsize has been added in enable parameter to have a look on the space used. you can increase the size with a shared cluster M2, the prize is 9$/month
-MongoDB Atlas account creation
+
+#  MongoDB Atlas account creation
 In your Browser open a new tab and enter the url bellow
 https://www.mongodb.com/cloud/atlas/register
 Enter your information in the form and click to  
@@ -120,7 +121,7 @@ A new tab will be open asking you to confirm your email address. Click on
 Complete the form with the information like the example bellow and click on “Finish”.
 ![image](https://user-images.githubusercontent.com/96974624/197186946-16479488-d277-47c0-b4d0-fbe20cc19eae.png)
  
-Database Creation
+#  Database Creation
 
 Click on “Build a database”
 ![image](https://user-images.githubusercontent.com/96974624/197186984-e3ac0b56-5ffa-4b3c-9133-40a9c592d053.png)
@@ -128,8 +129,7 @@ Click on “Build a database”
 Select “Create a cluster in Shared Clusters (FREE)”
 ![image](https://user-images.githubusercontent.com/96974624/197187024-3396294d-37c5-4cd7-82a7-9f65cf05c9d6.png)
 
-If banking information are request, stop the procedure
-
+If banking information are request, stop the procedure  
 We will create a free of charge cluster: no banking information needed.
 ![image](https://user-images.githubusercontent.com/96974624/197187089-edbcd369-7dcd-4e1b-9654-c3cf56ecbaf2.png)
 
@@ -137,8 +137,7 @@ Check that you have selected Shared, keep the default access and click on Create
 ![image](https://user-images.githubusercontent.com/96974624/197187130-1aea3f9e-7f26-4128-8dbe-06088fd0f621.png)
 
 Select Username and Password and invent a database username (for example nightscout) and a database password (keep the password safe from other).
-
-Database Password recommendation:
+atabase Password recommendation:
 - do not use the same as your Atlas account.
 - do not use special character and space. 
 - use only letters and numbers.
@@ -210,17 +209,17 @@ Connect to Oracle VM using Putty
 
 Putty is a free ssh tool available here Download PuTTY: latest release (0.77) (greenend.org.uk)
 
-Convert the private Key
+Convert the private Key# 
 
-Launch puttyGen
+Launch puttyG#  en
 ![image](https://user-images.githubusercontent.com/96974624/197187707-5487c412-223c-4cf4-83ee-29b98b865559.png)
  
 Open the provate key save during the Oracle Cloud VM creation
 when the Private Key is imported you can click on save Private Key with a .ppk extension
 
-Putty configuration
+# Putty configuration
  
-Launch putty
+#  Launch putty
 ![image](https://user-images.githubusercontent.com/96974624/197187750-f6e67a50-ac7a-404b-9dbe-8e0caf8f318a.png)
  
 In the field Hostname, enter the public IP of the Oracle Cloud VM
@@ -260,7 +259,7 @@ Complete the DNS entry with the public IP of oracle Cloud VM
  
 Click to save
 
-Nightscout installation
+# Nightscout installation
 
 This tutorial explain own to install Nightscout on CentOS 8, Oracle Linux 8 ou Redhat8. We will suppose that you are familiare with bash command on linux.
 To Resume:
@@ -268,12 +267,12 @@ We have a server with CentOS 8, RedHat8 or Oracle lunux 8
 Nous avons un serveur installé exécutant CentOS 8, accès via ssh. SELinux configuration will explain later. We will need to be connected as root. The server should have a Staic/ fixe IP adddress. A public DNS entry should be exist for the Fixe IP address and will be explain later. During the installation, I will use "night.freeddns.org".
 
 Start to be root
-#sudo –s
+sudo –s
  
-#dnf install git nano mc -y
-#dnf groupinstall 'Development Tools' -y
+dnf install git mc -y
+dnf groupinstall 'Development Tools' -y
 
-NodeJS Installation
+ NodeJS Installation
 The installation will be done from the AppStream repository, let check the existing version
 dnf module list nodejs
 Cela devrait ressembler à ceci :
