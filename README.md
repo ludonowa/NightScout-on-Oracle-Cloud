@@ -321,7 +321,8 @@ Connect under nightscout user and install NightScout
 Create an executable file on /opt/nightscout/cgm-remote-monitor/start.sh with the following content. Take care: MONGO_CONNECTION – parameter to connect to your Atla MongoDB create before. API_SECRET – secret key need to access to NightScout website. Some other option can be find in this chapter.
  
     vi /opt/nightscout/cgm-remote-monitor/start.sh
-
+ 
+ 
     #!/bin/bash
 
     # environment variables
@@ -353,13 +354,14 @@ Launch start.sh to start NightScout.
     ./start.sh
  
 Something like this appears in the console
-Load Complete:
-
-data loaded: reloading sandbox data and updating plugins
-For the COB plugin to function you need a treatment profile
-For the Basal plugin to function you need a treatment profile
-WS: emitted clear_alarm to all clients
-tick 2022-10-12T16:52:27.753Z
+ 
+    Load Complete:
+    
+    data loaded: reloading sandbox data and updating plugins
+    For the COB plugin to function you need a treatment profile
+    For the Basal plugin to function you need a treatment profile
+    WS: emitted clear_alarm to all clients
+    tick 2022-10-12T16:52:27.753Z
 
 stop the script with Ctrl+C
 We do other work under the root user, press Ctrl + D and return to the root console. We are making a service for Nightscout to start automatically, create a file /etc/systemd/system/nightscout.service with the following content.
@@ -405,82 +407,89 @@ After a while, we check that everything is working
     
 
 Verify that the port is listening and verify that website reply correctly
-netstat -ltupen | grep 1337
+ 
+    netstat -ltupen | grep 1337
 
-tcp        0      0 0.0.0.0:1337            0.0.0.0:*               LISTEN      1001       880135     318471/node
+    tcp        0      0 0.0.0.0:1337            0.0.0.0:*               LISTEN      1001       880135     318471/node
 
-curl http://localhost:1337 | grep "<title>"
+    curl http://localhost:1337 | grep "<title>"
 
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 42973  100 42973    0      <title>Nightscout</title>
- 0  2622k      0 --:--:-- --:--:-- --:--:-- 2622k
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+    100 42973  100 42973    0      <title>Nightscout</title>
+     0  2622k      0 --:--:-- --:--:-- --:--:-- 2622k
 
 If you see something like this, the site is working
-Nginx installation
+ 
+# Nginx installation
 Install nginx and certbot (to get a certificate from Let's Encrypt)
 Let us start by updating the operating system
-dnf update -y 
-dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+ 
+    dnf update -y 
+    dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
 
 
-dnf install nginx certbot python3-certbot-nginx -y
+    dnf install nginx certbot python3-certbot-nginx -y
 
-Nginx Configuration
+# Nginx Configuration
 Let's open the /etc/nginx/nginx.conf file and comment out the server section, i.e. bring it to this form
-vi /etc/nginx/nginx.conf
+ 
+    vi /etc/nginx/nginx.conf
 
-#    server {
-#        listen       80 default_server;
-#        listen       [::]:80 default_server;
-#        server_name  _;
-#        root         /usr/share/nginx/html;
-#
-#        # Load configuration files for the default server block.
-#        include /etc/nginx/default.d/*.conf;
-#
-#        location / {
-#        }
-#
-#        error_page 404 /404.html;
-#            location = /40x.html {
-#        }
-#
-#        error_page 500 502 503 504 /50x.html;
-#            location = /50x.html {
-#        }
-#    }
+    #    server {
+    #        listen       80 default_server;
+    #        listen       [::]:80 default_server;
+    #        server_name  _;
+    #        root         /usr/share/nginx/html;
+    #
+    #        # Load configuration files for the default server block.
+    #        include /etc/nginx/default.d/*.conf;
+    #
+    #        location / {
+    #        }
+    #
+    #        error_page 404 /404.html;
+    #            location = /40x.html {
+    #        }
+    #
+    #        error_page 500 502 503 504 /50x.html;
+    #            location = /50x.html {
+    #        }
+    #    }
 
 Create a new directory and configuration files
-mkdir /etc/nginx/includes
+ 
+    mkdir /etc/nginx/includes
+ 
 In /etc/nginx/includes/ssl
-vi /etc/nginx/includes/ssl
+ 
+    vi /etc/nginx/includes/ssl
 
-#ssl_certificate	/etc/pki/tls/certs/fullchain.pem;
-#ssl_certificate_key	/etc/pki/tls/certs/privkey.pem;
-
-ssl_protocols TLSv1.2 TLSv1.3;
-
-ssl_session_timeout 1d;
-ssl_session_cache shared:SSL:50m;
-ssl_session_tickets off;
-
-ssl_ciphers 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256';
+    #ssl_certificate	/etc/pki/tls/certs/fullchain.pem;
+    #ssl_certificate_key	/etc/pki/tls/certs/privkey.pem;
+    
+    ssl_protocols TLSv1.2 TLSv1.3;
+    
+    ssl_session_timeout 1d;
+    ssl_session_cache shared:SSL:50m;
+    ssl_session_tickets off;
+    
+    ssl_ciphers 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-    SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256';
 ssl_prefer_server_ciphers on;
-
-# HSTS (ngx_http_headers_module is required) (15768000 seconds = 6 months)
-add_header Strict-Transport-Security "max-age=15768000; includeSubdomains; ";
-
-# OCSP Stapling ---
-# fetch OCSP records from URL in ssl_certificate and cache them
-ssl_stapling on;
-ssl_stapling_verify on;
-
-ssl_trusted_certificate /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem;
-
-resolver 8.8.8.8 valid=300s;
-resolver_timeout 5s;
-
+    
+    # HSTS (ngx_http_headers_module is required) (15768000 seconds = 6 months)
+    add_header Strict-Transport-Security "max-age=15768000; includeSubdomains; ";
+    
+    # OCSP Stapling ---
+    # fetch OCSP records from URL in ssl_certificate and cache them
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    
+    ssl_trusted_certificate /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem;
+    
+    resolver 8.8.8.8 valid=300s;
+    resolver_timeout 5s;
+    
 
 In /etc/nginx/includes/proxy_pass_reverse
 vi /etc/nginx/includes/proxy_pass_reverse
