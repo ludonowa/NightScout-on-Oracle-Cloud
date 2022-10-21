@@ -297,12 +297,16 @@ I have: v12.18.3, 6.14.6, revision can be different but the revision should not 
 
 # Nightscout Deployment
 NightScout cannot run under root, so we will create a user a dedicated user with home folder on /opt/nightscout
+ 
     useradd -d /opt/nightscout -m -c "User for nightscout" nightscout
+ 
 Connect under nightscout user and install NightScout
+ 
     su - nightscout
     git clone https://github.com/nightscout/cgm-remote-monitor.git
     cd cgm-remote-monitor/
     npm install
+ 
 Create an executable file on /opt/nightscout/cgm-remote-monitor/start.sh with the following content. Take care: MONGO_CONNECTION – parameter to connect to your Atla MongoDB create before. API_SECRET – secret key need to access to NightScout website. Some other option can be find in this chapter
 vi /opt/nightscout/cgm-remote-monitor/start.sh
 
