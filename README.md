@@ -124,9 +124,11 @@ Complete the form with the information like the example bellow and click on “F
 #  Database Creation
 
 Click on “Build a database”
+
 ![image](https://user-images.githubusercontent.com/96974624/197186984-e3ac0b56-5ffa-4b3c-9133-40a9c592d053.png)
  
 Select “Create a cluster in Shared Clusters (FREE)”
+
 ![image](https://user-images.githubusercontent.com/96974624/197187024-3396294d-37c5-4cd7-82a7-9f65cf05c9d6.png)
 
 If banking information are request, stop the procedure  
@@ -274,8 +276,11 @@ Start to be root
 
 # NodeJS Installation
 The installation will be done from the AppStream repository, let check the existing version
-dnf module list nodejs
+ 
+    dnf module list nodejs
+ 
 Cela devrait ressembler à ceci :
+ 
     Oracle Linux 8 Application Stream (aarch64)
     Name      Stream    Profiles                                Summary
     nodejs    10 [d]    common [d], development, minimal, s2i   Javascript runtime
@@ -286,13 +291,19 @@ Cela devrait ressembler à ceci :
 Two flows are avalable, 10 et 12. [d] show that the revision 10 is by default. we need to move to the 12.
 dnf module enable nodejs:12 -y
 if the revision 10 flow is used launch a reset on the revision 10 flow and relaunch the command
+ 
     dnf module reset nodejs:10 -y 
     dnf module enable nodejs:12 -y
+ 
 # NodeJS installation
+ 
     dnf install nodejs –y
     dnf install npm -y
+ 
 Now NodeJS and npm are install let check the revision
+ 
     node --version && npm --version
+ 
 I have: v12.18.3, 6.14.6, revision can be different but the revision should not be less than mine
 
 # Nightscout Deployment
@@ -307,33 +318,40 @@ Connect under nightscout user and install NightScout
     cd cgm-remote-monitor/
     npm install
  
-Create an executable file on /opt/nightscout/cgm-remote-monitor/start.sh with the following content. Take care: MONGO_CONNECTION – parameter to connect to your Atla MongoDB create before. API_SECRET – secret key need to access to NightScout website. Some other option can be find in this chapter
-vi /opt/nightscout/cgm-remote-monitor/start.sh
+Create an executable file on /opt/nightscout/cgm-remote-monitor/start.sh with the following content. Take care: MONGO_CONNECTION – parameter to connect to your Atla MongoDB create before. API_SECRET – secret key need to access to NightScout website. Some other option can be find in this chapter.
+ 
+    vi /opt/nightscout/cgm-remote-monitor/start.sh
 
-#!/bin/bash
+    #!/bin/bash
 
-# environment variables
-export MONGO_CONNECTION="mongodb://userdb:passdb@localhost:27017/nightscout"
-export DISPLAY_UNITS="mg/dL"
-export BASE_URL="http://night.freeddns.org"
-export PORT=1337
-export DEVICESTATUS_ADVANCED=true
-export INSECURE_USE_HTTP=true
-export mongo_collection="entries"
-export API_SECRET="1234567890XY"
-export ENABLE="careportal basal rawbg cob iob cage bwp upbat sage pump"
-export TIME_FORMAT=24
-export THEME=colors
-export LANGUAGE=fr
-export SCALE_Y=linear
-export HOSTNAME=0.0.0.0
+    # environment variables
+    export MONGO_CONNECTION="mongodb://userdb:passdb@localhost:27017/nightscout"
+    export DISPLAY_UNITS="mg/dL"
+    export BASE_URL="http://night.freeddns.org"
+    export PORT=1337
+    export DEVICESTATUS_ADVANCED=true
+    export INSECURE_USE_HTTP=true
+    export mongo_collection="entries"
+    export API_SECRET="1234567890XY"
+    export ENABLE="careportal basal rawbg cob iob cage bwp upbat sage pump"
+    export TIME_FORMAT=24
+    export THEME=colors
+    export LANGUAGE=fr
+    export SCALE_Y=linear
+    export HOSTNAME=0.0.0.0
 
 # start server
-node /opt/nightscout/cgm-remote-monitor/server.js
+ 
+    node /opt/nightscout/cgm-remote-monitor/server.js
+ 
 Let's make our file executable
-chmod +x /opt/nightscout/cgm-remote-monitor/start.sh
+ 
+    chmod +x /opt/nightscout/cgm-remote-monitor/start.sh
+ 
 Launch start.sh to start NightScout.
-./start.sh
+ 
+    ./start.sh
+ 
 Something like this appears in the console
 Load Complete:
 
@@ -345,42 +363,46 @@ tick 2022-10-12T16:52:27.753Z
 
 stop the script with Ctrl+C
 We do other work under the root user, press Ctrl + D and return to the root console. We are making a service for Nightscout to start automatically, create a file /etc/systemd/system/nightscout.service with the following content.
-vi /etc/systemd/system/nightscout.service
+ 
+    vi /etc/systemd/system/nightscout.service
 
-[Unit]
-Description=Nightscout Service
-After=network.target
-
-[Service]
-Type=simple
-
-User=nightscout
-Group=nightscout
-
-WorkingDirectory=/opt/nightscout/cgm-remote-monitor
-ExecStart=/opt/nightscout/cgm-remote-monitor/start.sh
-
-[Install]
-WantedBy=multi-user.target
-
+    [Unit]
+    Description=Nightscout Service
+    After=network.target
+    
+    [Service]
+    Type=simple
+    
+    User=nightscout
+    Group=nightscout
+    
+    WorkingDirectory=/opt/nightscout/cgm-remote-monitor
+    ExecStart=/opt/nightscout/cgm-remote-monitor/start.sh
+    
+    [Install]
+    WantedBy=multi-user.target
+    
 Reload the daemon and start the service
-systemctl daemon-reload
-systemctl enable nightscout.service
-systemctl start nightscout.service
+ 
+    systemctl daemon-reload
+    systemctl enable nightscout.service
+    systemctl start nightscout.service
+ 
 After a while, we check that everything is working
-systemctl status nightscout.service
+ 
+    systemctl status nightscout.service
 
 
-● nightscout.service - Nightscout Service
-   Loaded: loaded (/etc/systemd/system/nightscout.service; enabled; vendor preset: disabled)
-   Active: active (running) since Mon 2020-09-07 22:45:25 +04; 18s ago
- Main PID: 37456 (start.sh)
-    Tasks: 12 (limit: 12525)
-   Memory: 61.0M
-   CGroup: /system.slice/nightscout.service
-           ├─37456 /bin/bash /opt/nightscout/cgm-remote-monitor/start.sh
-           └─37458 node /opt/nightscout/cgm-remote-monitor/server.js
-
+    ● nightscout.service - Nightscout Service
+    Loaded: loaded (/etc/systemd/system/nightscout.service; enabled; vendor preset: disabled)
+       Active: active (running) since Mon 2020-09-07 22:45:25 +04; 18s ago
+     Main PID: 37456 (start.sh)
+        Tasks: 12 (limit: 12525)
+       Memory: 61.0M
+       CGroup: /system.slice/nightscout.service
+               ├─37456 /bin/bash /opt/nightscout/cgm-remote-monitor/start.sh
+               └─37458 node /opt/nightscout/cgm-remote-monitor/server.js
+    
 
 Verify that the port is listening and verify that website reply correctly
 netstat -ltupen | grep 1337
