@@ -273,7 +273,6 @@ sudo –s
 dnf install git nano mc -y
 dnf groupinstall 'Development Tools' -y
 
-
 NodeJS Installation
 The installation will be done from the AppStream repository, let check the existing version
 dnf module list nodejs
