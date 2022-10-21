@@ -606,6 +606,7 @@ You can now request to create certificates
 
 
 As a result, you should see the following (trimmed) log
+ 
     .........
     IMPORTANT NOTES:
      - Congratulations! Your certificate and chain have been saved at:
