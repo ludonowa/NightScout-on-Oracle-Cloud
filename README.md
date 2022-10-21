@@ -209,9 +209,9 @@ Connect to Oracle VM using Putty
 
 Putty is a free ssh tool available here Download PuTTY: latest release (0.77) (greenend.org.uk)
 
-Convert the private Key# 
+# Convert the private Key 
 
-Launch puttyG#  en
+# Launch puttyGen
 ![image](https://user-images.githubusercontent.com/96974624/197187707-5487c412-223c-4cf4-83ee-29b98b865559.png)
  
 Open the provate key save during the Oracle Cloud VM creation
@@ -267,43 +267,42 @@ We have a server with CentOS 8, RedHat8 or Oracle lunux 8
 Nous avons un serveur installé exécutant CentOS 8, accès via ssh. SELinux configuration will explain later. We will need to be connected as root. The server should have a Staic/ fixe IP adddress. A public DNS entry should be exist for the Fixe IP address and will be explain later. During the installation, I will use "night.freeddns.org".
 
 Start to be root
- sudo -s
+    sudo -s
  
-dnf install git mc -y
-
-dnf groupinstall 'Development Tools' -y
+    dnf install git mc -y
+    dnf groupinstall 'Development Tools' -y
 
 # NodeJS Installation
 The installation will be done from the AppStream repository, let check the existing version
 dnf module list nodejs
 Cela devrait ressembler à ceci :
-Oracle Linux 8 Application Stream (aarch64)
-Name      Stream    Profiles                                Summary
-nodejs    10 [d]    common [d], development, minimal, s2i   Javascript runtime
-nodejs    12        common [d], development, minimal, s2i   Javascript runtime
-nodejs    14        common [d], development, minimal, s2i   Javascript runtime
-nodejs    16        common [d], development, minimal, s2i   Javascript runtime
+    Oracle Linux 8 Application Stream (aarch64)
+    Name      Stream    Profiles                                Summary
+    nodejs    10 [d]    common [d], development, minimal, s2i   Javascript runtime
+    nodejs    12        common [d], development, minimal, s2i   Javascript runtime
+    nodejs    14        common [d], development, minimal, s2i   Javascript runtime
+    nodejs    16        common [d], development, minimal, s2i   Javascript runtime
 
 Two flows are avalable, 10 et 12. [d] show that the revision 10 is by default. we need to move to the 12.
 dnf module enable nodejs:12 -y
 if the revision 10 flow is used launch a reset on the revision 10 flow and relaunch the command
-dnf module reset nodejs:10 -y 
-dnf module enable nodejs:12 -y
-NodeJS installation
-dnf install nodejs –y
-dnf install npm -y
+    dnf module reset nodejs:10 -y 
+    dnf module enable nodejs:12 -y
+# NodeJS installation
+    dnf install nodejs –y
+    dnf install npm -y
 Now NodeJS and npm are install let check the revision
-node --version && npm --version
+    node --version && npm --version
 I have: v12.18.3, 6.14.6, revision can be different but the revision should not be less than mine
 
-Nightscout Deployment
+# Nightscout Deployment
 NightScout cannot run under root, so we will create a user a dedicated user with home folder on /opt/nightscout
-useradd -d /opt/nightscout -m -c "User for nightscout" nightscout
+    useradd -d /opt/nightscout -m -c "User for nightscout" nightscout
 Connect under nightscout user and install NightScout
-su - nightscout
-git clone https://github.com/nightscout/cgm-remote-monitor.git
-cd cgm-remote-monitor/
-npm install
+    su - nightscout
+    git clone https://github.com/nightscout/cgm-remote-monitor.git
+    cd cgm-remote-monitor/
+    npm install
 Create an executable file on /opt/nightscout/cgm-remote-monitor/start.sh with the following content. Take care: MONGO_CONNECTION – parameter to connect to your Atla MongoDB create before. API_SECRET – secret key need to access to NightScout website. Some other option can be find in this chapter
 vi /opt/nightscout/cgm-remote-monitor/start.sh
 
