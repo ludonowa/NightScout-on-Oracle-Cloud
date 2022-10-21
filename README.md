@@ -585,9 +585,9 @@ By default on Oracle Cloud Firewalld is activated, so let's start the firewalld 
 
 # Configuration de SELinux
 Let's add the http https and 1337 ports to selinux
+ 
     semanage permissive -a httpd_t
     semanage port -a -t http_port_t -p tcp 1337
-
 
 Check that the command has been taken into account
  
