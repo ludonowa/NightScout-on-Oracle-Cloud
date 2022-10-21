@@ -289,7 +289,9 @@ It should looks like:
     nodejs    16        common [d], development, minimal, s2i   Javascript runtime
 
 Two flows are avalable, 10 et 12. [d] show that the revision 10 is by default. we need to move to the 12.
-dnf module enable nodejs:12 -y
+ 
+    dnf module enable nodejs:12 -y
+ 
 if the revision 10 flow is used launch a reset on the revision 10 flow and relaunch the command
  
     dnf module reset nodejs:10 -y 
@@ -492,137 +494,145 @@ ssl_prefer_server_ciphers on;
     
 
 In /etc/nginx/includes/proxy_pass_reverse
-vi /etc/nginx/includes/proxy_pass_reverse
+ 
+    vi /etc/nginx/includes/proxy_pass_reverse
 
-proxy_set_header X-Forwarded-Host $host;
-proxy_set_header X-Forwarded-Server $host;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Server $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
 
 Let us create a file with the configuration of our site /etc/nginx/conf.d/night.conf
-vi /etc/nginx/conf.d/night.conf
+ 
+    vi /etc/nginx/conf.d/night.conf
 
-server {
-    listen  80;
-    server_name night.freeddns.org default_server;
-    # enforce https
-    return 301 https://$server_name$request_uri;
-}
-server {
-    listen 443 ssl http2;
-    server_name night.freeddns.org default_server;
-
-    access_log /var/log/nginx/night-access.log;
-    error_log /var/log/nginx/night-error.log;
-
-    include /etc/nginx/includes/ssl;
-
-    location / {
-        proxy_pass http://127.0.0.1:1337/;
-        include /etc/nginx/includes/proxy_pass_reverse;
+    server {
+        listen  80;
+        server_name night.freeddns.org default_server;
+        # enforce https
+        return 301 https://$server_name$request_uri;
     }
-}
-
+    server {
+        listen 443 ssl http2;
+        server_name night.freeddns.org default_server;
+    
+        access_log /var/log/nginx/night-access.log;
+        error_log /var/log/nginx/night-error.log;
+    
+        include /etc/nginx/includes/ssl;
+    
+        location / {
+            proxy_pass http://127.0.0.1:1337/;
+            include /etc/nginx/includes/proxy_pass_reverse;
+        }
+    }
+    
 
 To obtain a certificate you must modify the nginx settings, for this we will create a directory
-mkdir -p /var/www/letsencrypt
-chown -R nginx:nginx /var/www/letsencrypt
+    mkdir -p /var/www/letsencrypt
+    chown -R nginx:nginx /var/www/letsencrypt
 
 
 We now need to ensure that any request such as: http://night.freeddns.org/.well-known/acme-challenge leads to the physical location /var/www/letsencrypt/.well-known/acme-challenge , To do this, create a /etc/nginx/includes/letsencrypt file with the following content
-vi /etc/nginx/includes/letsencrypt
+    vi /etc/nginx/includes/letsencrypt
 
-location ^~ /.well-known/acme-challenge/ {
-   default_type "text/plain";
-   root /var/www/letsencrypt;
-}
-location = /.well-known/acme-challenge/ {
-   return 404;
-}
+    location ^~ /.well-known/acme-challenge/ {
+       default_type "text/plain";
+       root /var/www/letsencrypt;
+    }
+    location = /.well-known/acme-challenge/ {
+       return 404;
+    }
 
 Now let's make changes to the /etc/nginx/conf.d/night.conf file by adding the line include /etc/nginx/includes/letsencrypt; it should look like this: (I cut the extra lines)
-vi /etc/nginx/conf.d/night.conf
+    vi /etc/nginx/conf.d/night.conf
 
-server {
-    listen 443 ssl http2;
-..........
-    include /etc/nginx/includes/ssl;
-    include /etc/nginx/includes/letsencrypt; 
-..........
-}
+    server {
+        listen 443 ssl http2;
+    ..........
+        include /etc/nginx/includes/ssl;
+        include /etc/nginx/includes/letsencrypt; 
+    ..........
+    }
 
 You can now request the issuance of certificates. I draw your attention to the fact that you must have a correctly configured entry in the DNS, in which all requests with the name night.freeddns.org must reach your server. You can check this with the command, where 123.45.67.89 is your server's IP address. In addition, you need to open ports 80, 443 on the firewall.
-host night.freeddns.org
-night.freeddns.org has address 123.45.67.89
+ 
+    host night.freeddns.org
+    night.freeddns.org has address 123.45.67.89
 
 
-Configuration de firewalld
-Par défaut sur Oracle c’est firewalld qui est activé, commencons par verifier le status de firewalld
-systemctl status firewalld.service
+# Configuration de firewalld
+By default on Oracle Cloud Firewalld is activated, so let's start the firewalld status
+ 
+    systemctl status firewalld.service
 
-● firewalld.service - firewalld - dynamic firewall daemon
-   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor p>
-   Active: active (running) since Mon 2022-10-10 18:36:45 GMT; 2 days ago
-     Docs: man:firewalld(1)
- Main PID: 1495 (firewalld)
-    Tasks: 2 (limit: 9097)
-   Memory: 65.3M
-   CGroup: /system.slice/firewalld.service
-           └─1495 /usr/libexec/platform-python -s /usr/sbin/firewalld --nofork >
-
-
-
-firewall-cmd --zone=public --add-service=http --permanent
-firewall-cmd --zone=public --add-service=https --permanent
-firewall-cmd  --reload
+    ● firewalld.service - firewalld - dynamic firewall daemon
+       Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor p>
+       Active: active (running) since Mon 2022-10-10 18:36:45 GMT; 2 days ago
+         Docs: man:firewalld(1)
+         Main PID: 1495 (firewalld)
+        Tasks: 2 (limit: 9097)
+       Memory: 65.3M
+       CGroup: /system.slice/firewalld.service
+               └─1495 /usr/libexec/platform-python -s /usr/sbin/firewalld --nofork >
 
 
-Configuration de SELinux
+
+    firewall-cmd --zone=public --add-service=http --permanent
+    firewall-cmd --zone=public --add-service=https --permanent
+    firewall-cmd  --reload
+
+
+# Configuration de SELinux
 Let's add the http https and 1337 ports to selinux
-semanage permissive -a httpd_t
-semanage port -a -t http_port_t -p tcp 1337
+    semanage permissive -a httpd_t
+    semanage port -a -t http_port_t -p tcp 1337
 
 
 Check that the command has been taken into account
-semanage port -l | grep http_port_t
+    semanage port -l | grep http_port_t
 
-http_port_t                    tcp      1337,80, 81, 443, 488, 8008, 8009, 8443, 9000
-pegasus_http_port_t            tcp      5988
+    http_port_t                    tcp      1337,80, 81, 443, 488, 8008, 8009, 8443, 9000
+    pegasus_http_port_t            tcp      5988
 
-Website certificates creation
+# Website certificates creation
 You can now request to create certificates
-# Request without email notification
-certbot certonly --nginx -d night.freeddns.org --register-unsafely-without-email
-# OR this one, with a notification to my_email@domain.fr
-certbot certonly --nginx -d night.freeddns.org -m my_email@domain.fr
+    # Request without email notification
+    certbot certonly --nginx -d night.freeddns.org --register-unsafely-without-email
+    # OR this one, with a notification to my_email@domain.fr
+    certbot certonly --nginx -d night.freeddns.org -m my_email@domain.fr
 
 
 As a result, you should see the following (trimmed) log
-.........
-IMPORTANT NOTES:
- - Congratulations! Your certificate and chain have been saved at:
-   /etc/letsencrypt/live/night.freeddns.org/fullchain.pem
-   Your key file has been saved at:
-   /etc/letsencrypt/live/night.freeddns.org/privkey.pem
-.........
+    .........
+    IMPORTANT NOTES:
+     - Congratulations! Your certificate and chain have been saved at:
+       /etc/letsencrypt/live/night.freeddns.org/fullchain.pem
+       Your key file has been saved at:
+       /etc/letsencrypt/live/night.freeddns.org/privkey.pem
+    .........
 
 
 Here we are interested in the path to the certificate and the private key. Let's modify the /etc/nginx/includes/ssl file, at the very beginning
-vi /etc/nginx/includes/ssl
+    vi /etc/nginx/includes/ssl
 
-ssl_certificate		/etc/letsencrypt/live/night.freeddns.org/fullchain.pem;
-ssl_certificate_key	/etc/letsencrypt/live/night.freeddns.org/privkey.pem;
+    ssl_certificate		/etc/letsencrypt/live/night.freeddns.org/fullchain.pem;
+    ssl_certificate_key	/etc/letsencrypt/live/night.freeddns.org/privkey.pem;
 
 
 Now let's configure nginx services and run it
-systemctl enable nginx.service
-systemctl restart nginx.service
+    systemctl enable nginx.service
+    systemctl restart nginx.service
 
 You can now navigate to the https://night.freeddns.org site and continue setting up the site itself. You can also verify the correct configuration of nginx and certificates on this site.
-Automatic certificates renewal
+
+# Automatic certificates renewal
 We will create a daily task to verify and renew certificates if needed
-vi /etc/cron.daily/letsencrypt
+ 
+    vi /etc/cron.daily/letsencrypt
+ 
 Add the following text, to randomly request a renewal
-#!/bin/sh
-python3 -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew
+ 
+    #!/bin/sh
+    python3 -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew
 
