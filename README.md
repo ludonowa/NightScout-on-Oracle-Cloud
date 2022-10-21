@@ -590,13 +590,15 @@ Let's add the http https and 1337 ports to selinux
 
 
 Check that the command has been taken into account
+ 
     semanage port -l | grep http_port_t
-
+    
     http_port_t                    tcp      1337,80, 81, 443, 488, 8008, 8009, 8443, 9000
     pegasus_http_port_t            tcp      5988
 
 # Website certificates creation
 You can now request to create certificates
+ 
     # Request without email notification
     certbot certonly --nginx -d night.freeddns.org --register-unsafely-without-email
     # OR this one, with a notification to my_email@domain.fr
@@ -614,13 +616,15 @@ As a result, you should see the following (trimmed) log
 
 
 Here we are interested in the path to the certificate and the private key. Let's modify the /etc/nginx/includes/ssl file, at the very beginning
+ 
     vi /etc/nginx/includes/ssl
-
+    
     ssl_certificate		/etc/letsencrypt/live/night.freeddns.org/fullchain.pem;
     ssl_certificate_key	/etc/letsencrypt/live/night.freeddns.org/privkey.pem;
 
 
 Now let's configure nginx services and run it
+ 
     systemctl enable nginx.service
     systemctl restart nginx.service
 
