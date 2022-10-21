@@ -546,7 +546,7 @@ We now need to ensure that any request such as: http://night.freeddns.org/.well-
 
 Now let's make changes to the /etc/nginx/conf.d/night.conf file by adding the line include /etc/nginx/includes/letsencrypt; it should look like this: (I cut the extra lines)
     vi /etc/nginx/conf.d/night.conf
-
+    
     server {
         listen 443 ssl http2;
     ..........
