@@ -170,43 +170,6 @@ Keep Node.js driver and version
 Click on Copy and keep the Database connection string 
 ![image](https://user-images.githubusercontent.com/96974624/197187591-07bfb868-2854-4c03-a355-3e86e4a58039.png)
  
-
-
-
-
-
-
-
-Backup your database⌁
-Not a normal operation
-Making a backup of your database is either a good idea or necessary if you want to migrate it to another database.
-This is not an easy operation and requires command line instructions using a computer.
-Install the database tools⌁
-Follow this link to install the CLI tool on your computer.
-Dump your database⌁
-Get your MONGODB_URI handy to find the missing pieces (password and database name).
-Log in your MongoDB account https://cloud.mongodb.com/.
-1.	Select your organization
-2.	Select your database
-3.	In the advanced options menu, select Command line tools
- 
-
-Scroll down to Binary import and Export tools, copy the mongodump command line.
- 
-Paste the command line in a text editor.
-Look into your MONGODB_URI and replace <PASSWORD> with your database password and entually (if you have one) <DATABASE> with your database name.
- 
-
-Open a command line utility (CMD, Terminal, ...) and make your way to the utility folder (if you don't want to include it in your system path).
-For example in Windows 64bits it's in C:\Program Files\MongoDB\Tools\100\bin.
-Copy and paste your mongodump command, run it.
- 
-
-You will find the database dump in a subfolder called dump with your database name in a subfolder.
- 
-
-
- 
 Connect to Oracle VM using Putty
 
 Putty is a free ssh tool available here Download PuTTY: latest release (0.77) (greenend.org.uk)
